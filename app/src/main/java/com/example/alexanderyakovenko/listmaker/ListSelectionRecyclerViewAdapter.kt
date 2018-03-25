@@ -7,7 +7,7 @@ import android.view.ViewGroup
 /**
  * Created by alexanderyakovenko on 3/25/18.
  */
-class ListSelectionRecyclerViewAdapter: RecyclerView.Adapter<ListSelectionViewHolder>() {
+class ListSelectionRecyclerViewAdapter(val lists: ArrayList<TaskList>): RecyclerView.Adapter<ListSelectionViewHolder>() {
 
     // 3
     val listTitles = arrayListOf("Shopping list", "Chores", "Android Tutorials")
@@ -17,14 +17,16 @@ class ListSelectionRecyclerViewAdapter: RecyclerView.Adapter<ListSelectionViewHo
     // create list_selection_view_holder.xml
 
     override fun getItemCount(): Int {
-        return listTitles.size
+        return lists.size //listTitles.size
     }
 
     override fun onBindViewHolder(holder: ListSelectionViewHolder?, position: Int) {
         // 6
         if (holder != null) {
             holder.listPosition.text = (position +1).toString()
-            holder.listTitle.text = listTitles[position]
+            // replace for ListdataManager and TaskList
+            //holder.listTitle.text = listTitles[position]
+            holder.listTitle.text = lists.get(position).name
         }
     }
 
@@ -32,5 +34,12 @@ class ListSelectionRecyclerViewAdapter: RecyclerView.Adapter<ListSelectionViewHo
         // 4
         val view = LayoutInflater.from(parent?.context).inflate(R.layout.list_selection_view_holder, parent,false)
         return ListSelectionViewHolder(view)
+    }
+
+
+    // add for TaskList and ListDataManager
+    fun addList(list: TaskList) {
+        lists.add(list)
+        notifyDataSetChanged()
     }
 }
